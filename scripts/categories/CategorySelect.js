@@ -5,10 +5,14 @@ const contentTarget = document.querySelector(".filter__category")
 
 let categories = []
 
+// Error fix #1 - added missing .then syntax
 export const CategorySelect = () => {
   getCategories()
-  categories = useCategories()
-  render()
+  .then(() => {
+    categories = useCategories()
+    render()
+  }
+  )
 }
 
 const render = () => {
