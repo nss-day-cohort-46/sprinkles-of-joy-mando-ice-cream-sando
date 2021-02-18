@@ -56,7 +56,7 @@ eventHub.addEventListener("click", evt => {
   }
 })
 
-
+// listens for click on register button and saves the customer data
 eventHub.addEventListener("click", e => {
   if (e.target.id === "customerRegister") {
   const fullName = `${document.querySelector('#register-firstName').value} ${document.querySelector('#register-lastName').value}`

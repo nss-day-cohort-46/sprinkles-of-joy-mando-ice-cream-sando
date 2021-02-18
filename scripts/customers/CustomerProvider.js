@@ -16,6 +16,7 @@ export const getCustomer = (id) => {
     .then(response => response.json())
 }
 
+// takes a customer object and posts it to the api
 export const saveCustomer = (customerObject) => {
   return fetch(`${bakeryAPI.baseURL}/customers`, {
     method: "POST",
