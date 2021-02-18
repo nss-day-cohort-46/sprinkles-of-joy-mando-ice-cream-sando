@@ -84,4 +84,4 @@ What do the status codes in HTTP responses mean? Check it out [here](https://dev
   1. Display the previous orders from most recent, descending.
   1. Modify the feature where a customer can delete any of their previous orders with the status of `Ready for Pickup`. Instead of permanently removing it from the database, implement a soft delete. Does there need to be any changes to your ERD?
 
-!(images/MandoBarsERD.png)
+![](MandoBarsERD.png)
