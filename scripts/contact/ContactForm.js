@@ -14,7 +14,7 @@ const contactForm = () => {
     <div id="contact__modal" class="modal--parent">
     <div class="modal--content">
         <h3>Contact Form</h3>
-        <form action="">
+        <form action="" id="contactForm">
             <fieldset>
                 <label for="contact-name">Name</label>
                 <input type="text" id="contact-name" name="contact-name">
@@ -59,6 +59,9 @@ eventHub.addEventListener("click", evt => {
             alert("Please complete all fields before submitting your message.")
         } else {
             saveContact(newContact)
+            const thisForm = document.querySelector('#contactForm')
+            thisForm.reset()
+            alert("Sucess! We have your message and will get back to you soon.")
         }
     }
 })
