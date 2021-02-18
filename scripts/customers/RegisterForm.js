@@ -1,5 +1,6 @@
 import { authHelper } from "../auth/authHelper.js"
 import { customerLogin } from "./CustomerProvider.js"
+import {saveCustomer} from "./CustomerProvider.js"
 
 const eventHub = document.querySelector("#container")
 const contentTarget = document.querySelector(".form__register")
@@ -42,13 +43,34 @@ const render = () => {
   }
 }
 
+// when you click the register link this hears the event and renders the register form
 eventHub.addEventListener("showRegisterForm", RegisterForm)
 
+// listens for clicking the login link to render that form
 eventHub.addEventListener("click", evt => {
   if (evt.target.id === "link__login") {
     contentTarget.innerHTML = ""
 
     const customEvent = new CustomEvent("showLoginForm")
     eventHub.dispatchEvent(customEvent)
+  }
+})
+
+// listens for click on register button and saves the customer data
+eventHub.addEventListener("click", e => {
+  if (e.target.id === "customerRegister") {
+  const fullName = `${document.querySelector('#register-firstName').value} ${document.querySelector('#register-lastName').value}`
+  const email = document.querySelector('#register-email').value
+  const rewardsmember = document.querySelector('#register-rewards').checked
+  const password = document.querySelector('#register-password').value
+  
+  const customerObject = {
+      name: fullName,
+      rewardsMember: rewardsmember,
+      email: email,
+      password: password
+  }
+
+    saveCustomer(customerObject)
   }
 })
