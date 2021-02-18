@@ -10,16 +10,17 @@ export const CategorySelect = () => {
   getCategories()
   .then(() => {
     categories = useCategories()
-    render()
+    render(categories)
   }
   )
 }
 
-const render = () => {
-  contentTarget.innerHtml = `
+const render = (categories) => {
+  debugger
+  contentTarget.innerHTML = `
       <select class="dropdown" id="categorySelect">
           <option value="0">All baked goods...</option>
-          ${categories.map(category => `<option value="${category.id}">${category.text}</option>`).join("")}
+          ${categories.map(category => `<option value="${category.id}">${category.name}</option>`).join("")}
       </select>
   `
 }
