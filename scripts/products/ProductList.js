@@ -18,6 +18,7 @@ export const ProductList = () => {
     })
 }
 
+// Error fix - fixed naming issue in the .find
 const render = () => {
   contentTarget.innerHTML = bakeryProducts.map(product => {
     const productCategory = bakeryCategories.find(category => category.id === product.categoryId)
