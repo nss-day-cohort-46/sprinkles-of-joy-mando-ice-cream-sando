@@ -33,9 +33,9 @@ const render = () => {
 eventHub.addEventListener("click", e => {
   if (e.target.id === "customerLogin") {
     e.preventDefault()
-    const loginEmail = document.querySelector(".login-email")
-    const loginPassword = document.querySelector(".login-password")
-
+    // fixed issue where the query selectors were looking for classes and did not have .value
+    const loginEmail = document.querySelector("#login-email").value
+    const loginPassword = document.querySelector("#login-password").value
     customerLogin(loginEmail, loginPassword)
       .then(user => {
         if (user) {
