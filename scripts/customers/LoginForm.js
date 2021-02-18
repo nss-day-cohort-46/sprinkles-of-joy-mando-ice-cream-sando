@@ -36,10 +36,8 @@ eventHub.addEventListener("click", e => {
     // fixed issue where the query selectors were looking for classes and did not have .value
     const loginEmail = document.querySelector("#login-email").value
     const loginPassword = document.querySelector("#login-password").value
-debugger
     customerLogin(loginEmail, loginPassword)
       .then(user => {
-        debugger
         if (user) {
           contentTarget.innerHTML = ""
 
