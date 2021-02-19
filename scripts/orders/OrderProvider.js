@@ -38,6 +38,12 @@ export const saveOrder = (order, productsInOrder) => {
     .then(dispatchStateChangeEvent)
 }
 
+const dispatchStateChangeEvent = () => {
+  const ordersStateChangedEvent = new CustomEvent("ordersStateChanged")
+  
+  eventHub.dispatchEvent(ordersStateChangedEvent)
+}
+
 const deleteOrder = orderId => {
   return fetch(`${bakeryAPI.baseURL}/orders/${orderId}`, {
     method: "DELETE"
@@ -45,12 +51,7 @@ const deleteOrder = orderId => {
   .then(OrderList)
 }
 
-const dispatchStateChangeEvent = () => {
-  const ordersStateChangedEvent = new CustomEvent("ordersStateChanged")
-
-  eventHub.dispatchEvent(ordersStateChangedEvent)
-}
-
+// calls delete order function with the orderId of the clicked order
 eventHub.addEventListener("deleteOrder", deleteEvt => {
   const orderId = deleteEvt.detail
   deleteOrder(orderId)
