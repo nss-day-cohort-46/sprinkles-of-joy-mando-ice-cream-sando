@@ -5,8 +5,13 @@ const eventHub = document.querySelector('#container')
 const contentTarget = document.querySelector('.contactFormContainer')
 let productId
 eventHub.addEventListener("saveReview", evt => {
-    productId = evt.detail.productId
-    contentTarget.innerHTML = reviewForm()
+    const currentCustomerId = parseInt(authHelper.getCurrentUserId())
+    if(currentCustomerId){
+        productId = evt.detail.productId
+        contentTarget.innerHTML = reviewForm()
+    }else{
+        alert("please login to leave a review")
+    }
 })
 
 
@@ -45,8 +50,6 @@ const reviewForm = () => {
 eventHub.addEventListener("click", evt => {
     if (evt.target.id === "reviewSubmit") {
         evt.preventDefault()
-        const currentCustomerId = parseInt(authHelper.getCurrentUserId())
-        if(currentCustomerId){
             const title = document.querySelector('#reviewTitle').value
             const text = document.querySelector('#reviewText').value
             const ratings = document.getElementsByName('rating')
@@ -71,7 +74,5 @@ eventHub.addEventListener("click", evt => {
                 thisForm.reset()
                 alert("Sucess! Thanks For your review")
             }
-            
-        }
     }
 })
