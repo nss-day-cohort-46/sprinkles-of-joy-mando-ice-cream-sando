@@ -1,6 +1,7 @@
 import { getProducts, useProducts } from "./ProductProvider.js"
 import { getCategories, useCategories } from "../categories/CategoryProvider.js"
 import { Product } from "./Product.js"
+import { getReviews, useReviews } from "../reviews/ReviewProvider.js"
 
 const eventHub = document.querySelector("#container")
 const contentTarget = document.querySelector(".menu__items")
@@ -11,19 +12,22 @@ const contentTarget = document.querySelector(".menu__items")
 export const ProductList = () => {
   getProducts()
     .then(getCategories)
+    .then(getReviews)
     .then(() => {
       const bakeryProducts = useProducts()
       const bakeryCategories = useCategories()
-      render(bakeryProducts, bakeryCategories)
+      const allReviews = useReviews()
+      render(bakeryProducts, bakeryCategories, allReviews)
     })
 }
 
 // Error fix - fixed naming issue in the .find
-const render = (bakeryProducts, bakeryCategories) => {
+const render = (bakeryProducts, bakeryCategories, allReviews) => {
   contentTarget.innerHTML = bakeryProducts.map(product => {
     const productCategory = bakeryCategories.find(category => category.id === product.categoryId)
 
-    return Product(product, productCategory)
+    const productReviews = allReviews.filter(review => review.productId === product.id)
+    return Product(product, productCategory, productReviews)
   }).join("")
 }
 
