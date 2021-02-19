@@ -8,6 +8,12 @@ const userCart = document.querySelector(".userCart")
 
 let productsInCart = []
 
+//Event listener to listen if the order has been saved
+eventHub.addEventListener("ordersStateChanged", e => {
+  productsInCart = []
+  OpenCart()
+})
+
 export const OpenCart = () => {
   render()
 }
@@ -59,7 +65,6 @@ eventHub.addEventListener("click", clickEvent => {
       .then(() => {
         const allStatuses = useStatuses()
         const initialOrderStatus = allStatuses.find(status => status.label.toLowerCase() === "Scheduled".toLowerCase())
-
         const newOrder = {
           "customerId": currentCustomerId,
           "statusId": initialOrderStatus.id,
