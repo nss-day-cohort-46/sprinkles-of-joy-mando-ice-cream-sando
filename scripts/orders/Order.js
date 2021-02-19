@@ -6,6 +6,16 @@ export const Order = (customerOrder, productArray) => {
     totalPrice += product.price                             //adding the price of each individual item
     return `<li>${product.name}</li>`                       //putting the individual product name into list elements
   }).join("")
+  
+  debugger
+
+  const deleteButton = () => {
+    if (customerOrder.status.id === 1){
+      return `<button id="deleteOrder--${customerOrder.id}">Delete</button>`
+    } else {
+      return ``
+    }
+  }
 
   return `
     <div class="order">
@@ -14,5 +24,6 @@ export const Order = (customerOrder, productArray) => {
       <ul>${productArrayHTMLrep}</ul>
     <p>${totalPrice}</p>
     </div>
+    ${deleteButton()}
   `
 }
