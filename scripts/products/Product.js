@@ -9,6 +9,7 @@ export const Product = (product, category) => {
           </header>
           <div>
               <button id="addProduct--${product.id}">Add to Cart</button>
+              <button id="addReview--${product.id}">Add Review</button>
               <p>${product.description} [${category.name}]</p>
           </div>
       </section>
@@ -24,5 +25,17 @@ eventHub.addEventListener("click", evt => {
             }
         })
         eventHub.dispatchEvent(addProductEvent)
+    }
+})
+
+eventHub.addEventListener("click", evt => {
+    if (evt.target.id.startsWith("addReview--")) {
+        const [prefix, productId] = evt.target.id.split("--")
+        const addReviewEvent = new CustomEvent("saveReview", {
+            detail: {
+                productId : parseInt(productId)
+            }
+        })
+        eventHub.dispatchEvent(addReviewEvent)
     }
 })
