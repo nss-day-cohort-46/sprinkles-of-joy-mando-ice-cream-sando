@@ -48,6 +48,7 @@ const render = () => {
 eventHub.addEventListener("showCustomerCart", e => OpenCart())
 
 eventHub.addEventListener("addToCart", event => {
+  
   const productId = event.detail.addedProduct
   getProducts()
     .then(() => {
@@ -56,10 +57,13 @@ eventHub.addEventListener("addToCart", event => {
       productsInCart.push(productToBeAdded)
       OpenCart()
     })
+  
+  
 })
 
 eventHub.addEventListener("click", clickEvent => {
   if (clickEvent.target.id === "placeOrder" && productsInCart.length !== 0) {
+    if(authHelper.isUserLoggedIn()){
     const currentCustomerId = parseInt(authHelper.getCurrentUserId())
     getStatuses()
       .then(() => {
@@ -73,5 +77,8 @@ eventHub.addEventListener("click", clickEvent => {
 
         return saveOrder(newOrder, productsInCart)
       })
+    }else{
+      alert("please login to place an order")
+    }
   }
 })
