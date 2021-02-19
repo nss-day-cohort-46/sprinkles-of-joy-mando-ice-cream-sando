@@ -1,4 +1,3 @@
-import { getProducts, useProducts } from "../products/ProductProvider.js"
 import { getCategories, useCategories } from "./CategoryProvider.js"
 
 const eventHub = document.querySelector("#container")

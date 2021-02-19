@@ -1,26 +1,25 @@
 import { getProducts, useProducts } from "./ProductProvider.js"
 import { getCategories, useCategories } from "../categories/CategoryProvider.js"
 import { Product } from "./Product.js"
-import { CategorySelect } from "../categories/CategorySelect.js"
 
 const eventHub = document.querySelector("#container")
 const contentTarget = document.querySelector(".menu__items")
 
-let bakeryProducts = []
-let bakeryCategories = []
+// let bakeryProducts = []
+// let bakeryCategories = []
 
 export const ProductList = () => {
   getProducts()
     .then(getCategories)
     .then(() => {
-      bakeryProducts = useProducts()
-      bakeryCategories = useCategories()
-      render()
+      const bakeryProducts = useProducts()
+      const bakeryCategories = useCategories()
+      render(bakeryProducts, bakeryCategories)
     })
 }
 
 // Error fix - fixed naming issue in the .find
-const render = () => {
+const render = (bakeryProducts, bakeryCategories) => {
   contentTarget.innerHTML = bakeryProducts.map(product => {
     const productCategory = bakeryCategories.find(category => category.id === product.categoryId)
 
@@ -29,21 +28,20 @@ const render = () => {
 }
 
 
-// listen for category selection 
+// listen for category selection, filter products by selection 
 eventHub.addEventListener("categorySelected", evt => {
-  console.log(evt.detail.selectedCategory)
+  const selectedCategory = evt.detail.selectedCategory
   
-    if (evt.detail.selectedCategory === 0 ){
-      CategorySelect()
+    if (selectedCategory === 0 ){
+      ProductList()
     } else {
       getCategories()
       .then(getProducts)
       .then(() => {
         const products = useProducts()
         const categories = useCategories()
-        const filteredProducts = 
-  
-        render()
+        const filteredProducts = products.filter(p => p.categoryId === selectedCategory)
+        render(filteredProducts, categories)
       })
     }
   
