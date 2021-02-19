@@ -44,7 +44,6 @@ eventHub.addEventListener("deleteOrder", deleteEvt => {
       const filteredOrdProd = orderProducts.filter(item => item.orderId === orderId)
 
       for (const item of filteredOrdProd) {
-        debugger
         deleteOrderProduct(item.id)
       }
     })
