@@ -34,7 +34,15 @@ const deleteOrderProduct = orderProductId => {
 }
 
 eventHub.addEventListener("deleteOrder", deleteEvt => {
-  const orderId = deleteEvt.detail
-  // iterated over orderProducts to get array of correct objcets, then run delete function
-  deleteOrderProduct(orderProductId)
+  getOrderProducts()
+  .then()
+  .then(() => {
+    const orderId = deleteEvt.detail
+    const orderProducts = useOrderProducts()
+    debugger
+    const filteredOrdProd = orderProducts.filter(item => item.orderId === orderId)
+    console.log(filteredOrdProd)
+    filteredOrdProd.map(item =>  deleteOrderProduct(item.id))
+  })
+
 })
