@@ -4,14 +4,15 @@ import { LoginForm } from "./LoginForm.js"
 
 const eventHub = document.querySelector("#container")
 const userNav = document.querySelector(".userNav")
-const logOutButtonTarget = document.querySelector(".navigation")
+const logOutButtonTarget = document.querySelector(".logOutLink")
+
 
 export const CustomerNav = () => {
   if (authHelper.isUserLoggedIn()) {
     getCustomer(authHelper.getCurrentUserId())
       .then(userObject => {
         render(userObject)
-        logOutButtonTarget.innerHTML += '<li><a href="#" id="logOutLink">Log Out</a></li>'
+        logOutButtonTarget.innerHTML = '<a href="#" id="logOutLink">Log Out</a>'
       })
   }
 }
