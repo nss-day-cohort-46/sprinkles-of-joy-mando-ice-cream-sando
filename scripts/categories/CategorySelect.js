@@ -1,4 +1,4 @@
-import { getProducts } from "../products/ProductProvider.js"
+import { getProducts, useProducts } from "../products/ProductProvider.js"
 import { getCategories, useCategories } from "./CategoryProvider.js"
 
 const eventHub = document.querySelector("#container")
@@ -36,20 +36,3 @@ eventHub.addEventListener("change", changeEvent => {
     eventHub.dispatchEvent(categoryCustomEvent)
   }
 })
-
-// listen for category selection 
-eventHub.addEventListener("categorySelected", evt => {
-console.log(evt.detail.selectedCategory)
-
-  // if (evt.detail.selectedCategory === 0 ){
-  //   CategorySelect()
-  // } else {
-  //   getCategories()
-  //   .then(getProducts)
-  //   .then(() => {
-  //     categories = useCategories
-  //   })
-  // }
-})
-
-// const filterCategory = 

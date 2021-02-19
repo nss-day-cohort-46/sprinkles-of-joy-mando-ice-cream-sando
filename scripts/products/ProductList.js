@@ -1,6 +1,7 @@
 import { getProducts, useProducts } from "./ProductProvider.js"
 import { getCategories, useCategories } from "../categories/CategoryProvider.js"
 import { Product } from "./Product.js"
+import { CategorySelect } from "../categories/CategorySelect.js"
 
 const eventHub = document.querySelector("#container")
 const contentTarget = document.querySelector(".menu__items")
@@ -26,3 +27,24 @@ const render = () => {
     return Product(product, productCategory)
   }).join("")
 }
+
+
+// listen for category selection 
+eventHub.addEventListener("categorySelected", evt => {
+  console.log(evt.detail.selectedCategory)
+  
+    if (evt.detail.selectedCategory === 0 ){
+      CategorySelect()
+    } else {
+      getCategories()
+      .then(getProducts)
+      .then(() => {
+        const products = useProducts()
+        const categories = useCategories()
+        const filteredProducts = 
+  
+        render()
+      })
+    }
+  
+  })
