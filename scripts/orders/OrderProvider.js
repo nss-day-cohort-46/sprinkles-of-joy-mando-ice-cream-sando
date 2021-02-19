@@ -42,3 +42,7 @@ const dispatchStateChangeEvent = () => {
 
   eventHub.dispatchEvent(ordersStateChangedEvent)
 }
+
+eventHub.addEventListener("deleteOrder", deleteEvt => {
+  console.log(deleteEvt.detail)
+})
