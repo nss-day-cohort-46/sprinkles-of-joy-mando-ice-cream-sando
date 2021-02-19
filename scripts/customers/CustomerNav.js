@@ -1,17 +1,30 @@
 import { authHelper } from "../auth/authHelper.js"
 import { getCustomer } from "../customers/CustomerProvider.js"
+import { LoginForm } from "./LoginForm.js"
 
 const eventHub = document.querySelector("#container")
 const userNav = document.querySelector(".userNav")
+const logOutButtonTarget = document.querySelector(".logOutLink")
+
 
 export const CustomerNav = () => {
   if (authHelper.isUserLoggedIn()) {
     getCustomer(authHelper.getCurrentUserId())
       .then(userObject => {
         render(userObject)
+        logOutButtonTarget.innerHTML = '<a href="#" id="logOutLink">Log Out</a>'
       })
   }
 }
+eventHub.addEventListener("click", e =>{
+    if(e.target.id === "logOutLink"){
+      userNav.innerHTML = ""
+      authHelper.logOut()
+      logOutButtonTarget.innerHTML = ""
+      LoginForm()
+    }
+})
+
 
 const render = (customer) => {
   userNav.innerHTML = `
