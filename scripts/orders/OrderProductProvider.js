@@ -1,4 +1,5 @@
 import { bakeryAPI } from "../Settings.js"
+import { deleteOrder } from "./OrderProvider.js"
 
 let orderProducts = []
 
@@ -33,14 +34,22 @@ const deleteOrderProduct = orderProductId => {
   })
 }
 
+// listens for delete order event. Deletes all orderProducts data, then the order data.
 eventHub.addEventListener("deleteOrder", deleteEvt => {
   getOrderProducts()
-  .then()
-  .then(() => {
-    const orderId = deleteEvt.detail
-    const orderProducts = useOrderProducts()
-    const filteredOrdProd = orderProducts.filter(item => item.orderId === orderId)
-    filteredOrdProd.map(item =>  deleteOrderProduct(item.id))
-  })
+    .then()
+    .then(() => {
+      const orderId = deleteEvt.detail
+      const orderProducts = useOrderProducts()
+      const filteredOrdProd = orderProducts.filter(item => item.orderId === orderId)
 
+      for (const item of filteredOrdProd) {
+        debugger
+        deleteOrderProduct(item.id)
+      }
+    })
+    .then(() => {
+      const orderId = deleteEvt.detail
+      deleteOrder(orderId)
+    })
 })

@@ -44,15 +44,9 @@ const dispatchStateChangeEvent = () => {
   eventHub.dispatchEvent(ordersStateChangedEvent)
 }
 
-const deleteOrder = orderId => {
+export const deleteOrder = orderId => {
   return fetch(`${bakeryAPI.baseURL}/orders/${orderId}`, {
     method: "DELETE"
   })
   .then(OrderList)
 }
-
-// calls delete order function with the orderId of the clicked order
-eventHub.addEventListener("deleteOrder", deleteEvt => {
-  const orderId = deleteEvt.detail
-  deleteOrder(orderId)
-})
