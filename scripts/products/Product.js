@@ -1,6 +1,14 @@
 const eventHub = document.querySelector("#container")
 
-export const Product = (product, category) => {
+export const Product = (product, category, productReviews) => {
+    let reviewHTML = ""
+
+    if (productReviews) {
+        reviewHTML = productReviews.map(review =>
+            `<div>${review.rating}</div>`
+        )
+    }
+
     return `
       <section class="baked_good">
           <header class="baked_good__header">
@@ -11,6 +19,9 @@ export const Product = (product, category) => {
               <button id="addProduct--${product.id}">Add to Cart</button>
               <button id="addReview--${product.id}">Add Review</button>
               <p>${product.description} [${category.name}]</p>
+          </div>
+          <div class="reviewContainer">
+            ${reviewHTML}
           </div>
       </section>
   `
@@ -33,7 +44,7 @@ eventHub.addEventListener("click", evt => {
         const [prefix, productId] = evt.target.id.split("--")
         const addReviewEvent = new CustomEvent("saveReview", {
             detail: {
-                productId : parseInt(productId)
+                productId: parseInt(productId)
             }
         })
         eventHub.dispatchEvent(addReviewEvent)
