@@ -10,25 +10,26 @@ export const CategorySelect = () => {
   getCategories()
   .then(() => {
     categories = useCategories()
-    render()
+    render(categories)
   }
   )
 }
 
-const render = () => {
-  contentTarget.innerHtml = `
+const render = (categories) => {
+  contentTarget.innerHTML = `
       <select class="dropdown" id="categorySelect">
           <option value="0">All baked goods...</option>
-          ${categories.map(category => `<option value="${category.id}">${category.text}</option>`).join("")}
+          ${categories.map(category => `<option value="${category.id}">${category.name}</option>`).join("")}
       </select>
   `
 }
 
+// broadcast event for selecting baked good category
 eventHub.addEventListener("change", changeEvent => {
   if (changeEvent.target.id === "categorySelect") {
     const categoryCustomEvent = new CustomEvent("categorySelected", {
       detail: {
-        selectedCategory: changeEvent.target.value
+        selectedCategory: parseInt(changeEvent.target.value)
       }
     })
     eventHub.dispatchEvent(categoryCustomEvent)
