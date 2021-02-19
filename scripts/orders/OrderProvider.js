@@ -1,5 +1,6 @@
 import { bakeryAPI } from "../Settings.js"
 import { saveOrderProducts } from "./OrderProductProvider.js"
+import { OrderList } from "./OrderList.js"
 
 const eventHub = document.querySelector("#container")
 
@@ -37,6 +38,13 @@ export const saveOrder = (order, productsInOrder) => {
     .then(dispatchStateChangeEvent)
 }
 
+const deleteOrder = orderId => {
+  return fetch(`${bakeryAPI.baseURL}/orders/${orderId}`, {
+    method: "DELETE"
+  })
+  .then(OrderList)
+}
+
 const dispatchStateChangeEvent = () => {
   const ordersStateChangedEvent = new CustomEvent("ordersStateChanged")
 
@@ -44,5 +52,6 @@ const dispatchStateChangeEvent = () => {
 }
 
 eventHub.addEventListener("deleteOrder", deleteEvt => {
-  console.log(deleteEvt.detail)
+  const orderId = deleteEvt.detail
+  deleteOrder(orderId)
 })
