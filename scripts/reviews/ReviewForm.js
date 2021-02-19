@@ -53,6 +53,7 @@ eventHub.addEventListener("click", evt => {
             const title = document.querySelector('#reviewTitle').value
             const text = document.querySelector('#reviewText').value
             const ratings = document.getElementsByName('rating')
+            const currentCustomerId = parseInt(authHelper.getCurrentUserId())
             let ratingValue
             for (const rating of ratings) {
                 if(rating.checked){

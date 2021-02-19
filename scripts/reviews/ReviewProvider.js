@@ -26,6 +26,11 @@ export const useReviews = () => {
   return reviews.slice()
 }
 
+export const getReviewById = (reviewId) => {
+
+  return reviews.find(r => r.id === reviewId)
+}
+
 // TO DO
 // 1. get and use reviews
 // 2. when populating products, pass an argument of a review object

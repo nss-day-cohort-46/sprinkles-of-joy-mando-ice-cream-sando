@@ -25,7 +25,7 @@ export const ProductList = () => {
 const render = (bakeryProducts, bakeryCategories, allReviews) => {
   contentTarget.innerHTML = bakeryProducts.map(product => {
     const productCategory = bakeryCategories.find(category => category.id === product.categoryId)
-    debugger
+
     const productReviews = allReviews.filter(review => review.productId === product.id)
     return Product(product, productCategory, productReviews)
   }).join("")
