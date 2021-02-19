@@ -45,18 +45,16 @@ const render = (arrayOfProductArrays, arrayOfOrders) => {
     ordersHtmlRepresentation += Order(order, productArray) // sending the single order and a single array of products related to that order into the Order function
   }
 
-
-    
   
   contentContainer.innerHTML = `
   <div id="orders__modal" class="modal--parent">
         <div class="modal--content">
-        <h3>Previous Orders</h3>
-        <div>
-        <h5>Ordered on</h5>
-        ${ordersHtmlRepresentation}
-        </div>
-        <button id="modal--close">Close</button>
+          <h3>Previous Orders</h3>
+          <div>
+            <h5>Ordered on</h5>
+            ${ordersHtmlRepresentation}
+          </div>
+          <button id="modal--close">Close</button>
         </div>
     </div>
       `
