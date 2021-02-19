@@ -1,4 +1,5 @@
 import { bakeryAPI } from "../Settings.js"
+
 export const saveReview = (reviewObject) => {
     return fetch(`${bakeryAPI.baseURL}/reviews`, {
       method: "POST",
@@ -8,3 +9,8 @@ export const saveReview = (reviewObject) => {
       body:JSON.stringify(reviewObject)
     })
   }
+
+const getReviews = () => {
+  return fetch(`${bakeryAPI.baseURL}/reviews`)
+  .then( )
+}
