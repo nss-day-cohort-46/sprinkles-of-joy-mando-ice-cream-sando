@@ -2,6 +2,8 @@ import { bakeryAPI } from "../Settings.js"
 
 let orderProducts = []
 
+const eventHub = document.querySelector("#container")
+
 export const useOrderProducts = () => orderProducts.slice()
 
 export const getOrderProducts = () => {
@@ -24,3 +26,15 @@ export const saveOrderProducts = (orderProductsArray) => {
   })
   return Promise.all(orderProductsPromiseArray)
 }
+
+const deleteOrderProduct = orderProductId => {
+  return fetch(`${bakeryAPI.baseURL}/orderproducts/${orderProductId}`, {
+    method: "DELETE"
+  })
+}
+
+eventHub.addEventListener("deleteOrder", deleteEvt => {
+  const orderId = deleteEvt.detail
+  // iterated over orderProducts to get array of correct objcets, then run delete function
+  deleteOrderProduct(orderProductId)
+})
