@@ -1,3 +1,4 @@
+import { getProducts } from "../products/ProductProvider.js"
 import { getCategories, useCategories } from "./CategoryProvider.js"
 
 const eventHub = document.querySelector("#container")
@@ -16,7 +17,6 @@ export const CategorySelect = () => {
 }
 
 const render = (categories) => {
-  debugger
   contentTarget.innerHTML = `
       <select class="dropdown" id="categorySelect">
           <option value="0">All baked goods...</option>
@@ -25,13 +25,31 @@ const render = (categories) => {
   `
 }
 
+// broadcast event for selecting baked good category
 eventHub.addEventListener("change", changeEvent => {
   if (changeEvent.target.id === "categorySelect") {
     const categoryCustomEvent = new CustomEvent("categorySelected", {
       detail: {
-        selectedCategory: changeEvent.target.value
+        selectedCategory: parseInt(changeEvent.target.value)
       }
     })
     eventHub.dispatchEvent(categoryCustomEvent)
   }
 })
+
+// listen for category selection 
+eventHub.addEventListener("categorySelected", evt => {
+console.log(evt.detail.selectedCategory)
+
+  // if (evt.detail.selectedCategory === 0 ){
+  //   CategorySelect()
+  // } else {
+  //   getCategories()
+  //   .then(getProducts)
+  //   .then(() => {
+  //     categories = useCategories
+  //   })
+  // }
+})
+
+// const filterCategory = 
