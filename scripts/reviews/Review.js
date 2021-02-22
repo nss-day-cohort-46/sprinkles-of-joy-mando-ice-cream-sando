@@ -1,8 +1,6 @@
 import { useCustomers } from "../customers/CustomerProvider.js";
 
-
 export const review = (productReviews) => {
-
 
     return productReviews.map(review => {
         const allCustomers = useCustomers()

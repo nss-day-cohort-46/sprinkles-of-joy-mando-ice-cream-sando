@@ -3,11 +3,11 @@ import { review } from '../reviews/Review.js'
 const eventHub = document.querySelector("#container")
 
 export const Product = (product, category, productReviews) => {
-    let reviewHTML = ""
+    let reviewHTML = "<p>No Reviews Yet...</p>"
 
-    if (productReviews) {
+    if (productReviews.length > 0) {
         reviewHTML = review(productReviews)
-    }
+    } 
 
     return `
       <section class="baked_good">
