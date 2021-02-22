@@ -14,7 +14,7 @@ export const ProductList = () => {
   getProducts()
     .then(getCategories)
     .then(getReviews)
-    .then(getCustomers)
+    // .then(getCustomers)
     .then(() => {
       const bakeryProducts = useProducts()
       const bakeryCategories = useCategories()
