@@ -1,8 +1,7 @@
 import { getCustomers, useCustomers } from "../customers/CustomerProvider.js";
 
 export const review = (productReviews) => {
-    const reviewHTML = getCustomers()
-        .then(() => {
+    const reviewHTML = ""
             const allCustomers = useCustomers()
             return productReviews.map(review => {
                 const customer = allCustomers.find(c => c.id === review.customerId)
@@ -18,6 +17,6 @@ export const review = (productReviews) => {
                 }
                 return `<div>${fname}<a href="#" id="reviewLink--${review.id}">${stars} ${blankStars}</a></div>`
             }).join("")
-        })
+        
 
 }
