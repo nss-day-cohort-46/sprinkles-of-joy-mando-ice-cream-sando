@@ -1,3 +1,4 @@
+import { review } from '../reviews/Review.js'
 import { authHelper } from '../auth/authHelper.js'
 import { getReviewById, deleteReview } from '../reviews/ReviewProvider.js'
 import { ProductList } from './ProductList.js'
@@ -5,25 +6,15 @@ import { ProductList } from './ProductList.js'
 const eventHub = document.querySelector("#container")
 
 export const Product = (product, category, productReviews) => {
+    const reviews = review(productReviews)
     let reviewHTML = ""
-
-    if (productReviews) {
-        reviewHTML = productReviews.map(review => {
-            let stars = ""
-            for (let index = 0; index < review.rating; index++) {
-                stars += " ⭐ ";
-            }
-            let blankStars = ""
-            for (let index = 0; index < 5 - review.rating; index++) {
-                blankStars += " ☆ ";
-            }
-            return `<div><a href="#" id="reviewLink--${review.id}">${stars} ${blankStars}</a></div>`
-        }
-
-        ).join("")
+    if (productReviews.length > 0) {
+        reviewHTML = reviews
+    } else {
+        reviewHTML = "<p>No Reviews Yet...</p>"
     }
 
-    return `
+return `
       <section class="baked_good">
           <header class="baked_good__header">
               <h4>${product.name}</h4>
@@ -35,6 +26,7 @@ export const Product = (product, category, productReviews) => {
               <p>${product.description} [${category.name}]</p>
           </div>
           <div class="reviewContainer">
+          <h4>Reviews:</h4>
             ${reviewHTML}
           </div>
       </section>
