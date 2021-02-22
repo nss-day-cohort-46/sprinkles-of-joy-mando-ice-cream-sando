@@ -3,13 +3,15 @@ import { review } from '../reviews/Review.js'
 const eventHub = document.querySelector("#container")
 
 export const Product = (product, category, productReviews) => {
-    let reviewHTML = "<p>No Reviews Yet...</p>"
     const reviews = review(productReviews)
+    let reviewHTML = ""
     if (productReviews.length > 0) {
         reviewHTML = reviews
-    } 
+    } else {
+        reviewHTML = "<p>No Reviews Yet...</p>"
+    }
 
-    return `
+return `
       <section class="baked_good">
           <header class="baked_good__header">
               <h4>${product.name}</h4>
