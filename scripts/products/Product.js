@@ -23,6 +23,7 @@ return `
               <p>${product.description} [${category.name}]</p>
           </div>
           <div class="reviewContainer">
+          <h4>Reviews:</h4>
             ${reviewHTML}
           </div>
       </section>
