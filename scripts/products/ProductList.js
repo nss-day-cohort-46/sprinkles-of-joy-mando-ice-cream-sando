@@ -42,12 +42,14 @@ eventHub.addEventListener("categorySelected", evt => {
       ProductList()
     } else {
       getCategories()
+      .then(getReviews)
       .then(getProducts)
       .then(() => {
+        const reviews = useReviews()
         const products = useProducts()
         const categories = useCategories()
         const filteredProducts = products.filter(p => p.categoryId === selectedCategory)
-        render(filteredProducts, categories)
+        render(filteredProducts, categories, reviews)
       })
     }
   
