@@ -6,7 +6,14 @@ const eventHub = document.querySelector("#container")
 
 let orders = []
 
-export const useOrders = () => orders.slice()
+export const useOrders = () => {
+  const ordersCopy = orders.slice()
+  const sortedByDate = ordersCopy.sort(
+    (nextOrder, currentOrder) => 
+    Date.parse(nextOrder.timestamp) - Date.parse(currentOrder.timestamp)
+  )
+  return sortedByDate
+}
 
 export const getOrders = () => {
   return fetch(`${bakeryAPI.baseURL}/orders?_expand=status`)
