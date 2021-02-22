@@ -35,13 +35,13 @@ return `
 
 eventHub.addEventListener("click", evt => {
     if (evt.target.id.startsWith("reviewLink--")) {
-        const [prefix, reviewId] = evt.target.id.split("--")
+        const [prefix, reviewId, name] = evt.target.id.split("--")
         const contentTarget = document.querySelector('.contactFormContainer')
-        contentTarget.innerHTML = reviewModal(parseInt(reviewId))
+        contentTarget.innerHTML = reviewModal(parseInt(reviewId),name)
     }
 })
 
-const reviewModal = (reviewId) => {
+const reviewModal = (reviewId,name) => {
     const currentReview = getReviewById(reviewId)
     let deleteButton = ""
     if(currentReview.customerId === parseInt(authHelper.getCurrentUserId())){
@@ -50,8 +50,9 @@ const reviewModal = (reviewId) => {
     return `
     <div id="review__modal" class="modal--parent">
     <div class="modal--content">
-        <h3>${currentReview.title}</h3>
-        <p>${currentReview.text}</p>
+        <h3>Title : ${currentReview.title}</h3>
+        <p>Text : ${currentReview.text}</p>
+        <p>Author : ${name}</p>
         <button id="formModal--close">Close</button>
         ${deleteButton}
     </div>
