@@ -4,9 +4,9 @@ const eventHub = document.querySelector("#container")
 
 export const Product = (product, category, productReviews) => {
     let reviewHTML = "<p>No Reviews Yet...</p>"
-
+    const reviews = review(productReviews)
     if (productReviews.length > 0) {
-        reviewHTML = review(productReviews)
+        reviewHTML = reviews
     } 
 
     return `
