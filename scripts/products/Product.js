@@ -1,24 +1,12 @@
 import { getReviewById } from '../reviews/ReviewProvider.js'
-
+import { review } from '../reviews/Review.js'
 const eventHub = document.querySelector("#container")
 
 export const Product = (product, category, productReviews) => {
     let reviewHTML = ""
 
     if (productReviews) {
-        reviewHTML = productReviews.map(review => {
-            let stars = ""
-            for (let index = 0; index < review.rating; index++) {
-                stars += " ⭐ ";
-            }
-            let blankStars = ""
-            for (let index = 0; index < 5 - review.rating; index++) {
-                blankStars += " ☆ ";
-            }
-            return `<div><a href="#" id="reviewLink--${review.id}">${stars} ${blankStars}</a></div>`
-        }
-
-        ).join("")
+        reviewHTML = review(productReviews)
     }
 
     return `

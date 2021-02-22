@@ -2,6 +2,7 @@ import { getProducts, useProducts } from "./ProductProvider.js"
 import { getCategories, useCategories } from "../categories/CategoryProvider.js"
 import { Product } from "./Product.js"
 import { getReviews, useReviews } from "../reviews/ReviewProvider.js"
+import { getCustomers } from "../customers/CustomerProvider.js"
 
 const eventHub = document.querySelector("#container")
 const contentTarget = document.querySelector(".menu__items")
@@ -13,6 +14,7 @@ export const ProductList = () => {
   getProducts()
     .then(getCategories)
     .then(getReviews)
+    .then(getCustomers)
     .then(() => {
       const bakeryProducts = useProducts()
       const bakeryCategories = useCategories()
