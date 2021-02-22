@@ -1,4 +1,6 @@
-import { getReviewById } from '../reviews/ReviewProvider.js'
+import { authHelper } from '../auth/authHelper.js'
+import { getReviewById, deleteReview } from '../reviews/ReviewProvider.js'
+import { ProductList } from './ProductList.js'
 
 const eventHub = document.querySelector("#container")
 
@@ -49,12 +51,17 @@ eventHub.addEventListener("click", evt => {
 
 const reviewModal = (reviewId) => {
     const currentReview = getReviewById(reviewId)
+    let deleteButton = ""
+    if(currentReview.customerId === parseInt(authHelper.getCurrentUserId())){
+        deleteButton = `<button id="deleteReview--${reviewId}">Delete</button>`
+    }
     return `
     <div id="review__modal" class="modal--parent">
     <div class="modal--content">
         <h3>${currentReview.title}</h3>
         <p>${currentReview.text}</p>
         <button id="formModal--close">Close</button>
+        ${deleteButton}
     </div>
 </div>
     `
@@ -82,4 +89,12 @@ eventHub.addEventListener("click", evt => {
         })
         eventHub.dispatchEvent(addReviewEvent)
     }
+})
+
+eventHub.addEventListener("click", evt => {
+    if (evt.target.id.startsWith("deleteReview--")) {
+        const [prefix, reviewId] = evt.target.id.split("--")
+        deleteReview(reviewId).then(document.querySelector('.contactFormContainer').innerHTML = "")
+        .then(ProductList())
+    }  
 })
