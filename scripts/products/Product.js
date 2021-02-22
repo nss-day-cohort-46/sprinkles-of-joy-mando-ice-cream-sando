@@ -1,15 +1,20 @@
-import { getReviewById } from '../reviews/ReviewProvider.js'
 import { review } from '../reviews/Review.js'
+import { authHelper } from '../auth/authHelper.js'
+import { getReviewById, deleteReview } from '../reviews/ReviewProvider.js'
+import { ProductList } from './ProductList.js'
+
 const eventHub = document.querySelector("#container")
 
 export const Product = (product, category, productReviews) => {
-    let reviewHTML = "<p>No Reviews Yet...</p>"
-
+    const reviews = review(productReviews)
+    let reviewHTML = ""
     if (productReviews.length > 0) {
-        reviewHTML = review(productReviews)
-    } 
+        reviewHTML = reviews
+    } else {
+        reviewHTML = "<p>No Reviews Yet...</p>"
+    }
 
-    return `
+return `
       <section class="baked_good">
           <header class="baked_good__header">
               <h4>${product.name}</h4>
@@ -21,6 +26,7 @@ export const Product = (product, category, productReviews) => {
               <p>${product.description} [${category.name}]</p>
           </div>
           <div class="reviewContainer">
+          <h4>Reviews:</h4>
             ${reviewHTML}
           </div>
       </section>
@@ -37,7 +43,10 @@ eventHub.addEventListener("click", evt => {
 
 const reviewModal = (reviewId,name) => {
     const currentReview = getReviewById(reviewId)
-
+    let deleteButton = ""
+    if(currentReview.customerId === parseInt(authHelper.getCurrentUserId())){
+        deleteButton = `<button id="deleteReview--${reviewId}">Delete</button>`
+    }
     return `
     <div id="review__modal" class="modal--parent">
     <div class="modal--content">
@@ -45,6 +54,7 @@ const reviewModal = (reviewId,name) => {
         <p>Text : ${currentReview.text}</p>
         <p>Author : ${name}</p>
         <button id="formModal--close">Close</button>
+        ${deleteButton}
     </div>
 </div>
     `
@@ -72,4 +82,12 @@ eventHub.addEventListener("click", evt => {
         })
         eventHub.dispatchEvent(addReviewEvent)
     }
+})
+
+eventHub.addEventListener("click", evt => {
+    if (evt.target.id.startsWith("deleteReview--")) {
+        const [prefix, reviewId] = evt.target.id.split("--")
+        deleteReview(reviewId).then(document.querySelector('.contactFormContainer').innerHTML = "")
+        .then(ProductList())
+    }  
 })

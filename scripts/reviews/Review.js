@@ -17,6 +17,4 @@ export const review = (productReviews) => {
                 }
                 return `<div>${fname}<a href="#" id="reviewLink--${review.id}--${customer.name}">${stars} ${blankStars}</a></div>`
             }).join("")
-        
-
 }
