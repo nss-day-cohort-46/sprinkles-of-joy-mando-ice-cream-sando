@@ -15,7 +15,7 @@ export const review = (productReviews) => {
                 for (let index = 0; index < 5 - review.rating; index++) {
                     blankStars += " ☆ ";
                 }
-                return `<div>${fname}<a href="#" id="reviewLink--${review.id}">${stars} ${blankStars}</a></div>`
+                return `<div>${fname}<a href="#" id="reviewLink--${review.id}--${customer.name}">${stars} ${blankStars}</a></div>`
             }).join("")
         
 
