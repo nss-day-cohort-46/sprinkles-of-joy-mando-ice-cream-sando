@@ -30,7 +30,11 @@ export const getReviewById = (reviewId) => {
 
   return reviews.find(r => r.id === reviewId)
 }
-
+export const deleteReview = reviewId => {
+  return fetch(`${bakeryAPI.baseURL}/reviews/${reviewId}`, {
+    method: "DELETE"
+  })
+}
 // TO DO
 // 1. get and use reviews
 // 2. when populating products, pass an argument of a review object
