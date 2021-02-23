@@ -98,12 +98,12 @@ eventHub.addEventListener("click", evt => {
                 }    
             }
             const newReview = {
-                id : id,
+                id : parseInt(id),
                 title: title,
                 text : text,
                 rating : parseInt(ratingValue),
                 customerId : currentCustomerId,
-                productId : pId
+                productId : parseInt(pId)
             }
             if (title === "" || text === "" || ratingValue === "") {
                 alert("Please complete all fields before submitting your message.")
