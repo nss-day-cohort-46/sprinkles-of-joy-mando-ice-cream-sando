@@ -50,7 +50,6 @@ eventHub.addEventListener("showRegisterForm", RegisterForm)
 eventHub.addEventListener("click", evt => {
   if (evt.target.id === "link__login") {
     contentTarget.innerHTML = ""
-
     const customEvent = new CustomEvent("showLoginForm")
     eventHub.dispatchEvent(customEvent)
   }
@@ -59,6 +58,7 @@ eventHub.addEventListener("click", evt => {
 // listens for click on register button and saves the customer data
 eventHub.addEventListener("click", e => {
   if (e.target.id === "customerRegister") {
+  e.preventDefault()
   const fullName = `${document.querySelector('#register-firstName').value} ${document.querySelector('#register-lastName').value}`
   const email = document.querySelector('#register-email').value
   const rewardsmember = document.querySelector('#register-rewards').checked
@@ -70,7 +70,13 @@ eventHub.addEventListener("click", e => {
       email: email,
       password: password
   }
-
-    saveCustomer(customerObject)
+    saveCustomer(customerObject).then((user)=>{
+      authHelper.storeUserInSessionStorage(user.id)
+    }).then(()=>{
+      contentTarget.innerHTML = ""
+      const customEvent = new CustomEvent("userLoggedIn")
+      eventHub.dispatchEvent(customEvent)
+    })
+    
   }
 })

@@ -24,7 +24,7 @@ export const saveCustomer = (customerObject) => {
       "Content-Type": "application/json"
     },
     body:JSON.stringify(customerObject)
-  })
+  }).then(response => response.json())
 }
 
 export const customerLogin = (email, password) => {
