@@ -10,7 +10,7 @@ export const useOrders = () => {
   const ordersCopy = orders.slice()
   const sortedByDate = ordersCopy.sort(
     (nextOrder, currentOrder) => 
-    Date.parse(nextOrder.timestamp) - Date.parse(currentOrder.timestamp)
+    currentOrder.timestamp - nextOrder.timestamp
   )
   return sortedByDate
 }
