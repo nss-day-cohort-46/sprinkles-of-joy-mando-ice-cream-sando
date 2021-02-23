@@ -51,9 +51,16 @@ const dispatchStateChangeEvent = () => {
   eventHub.dispatchEvent(ordersStateChangedEvent)
 }
 
+// updated to change orderstatus to archived
 export const deleteOrder = orderId => {
   return fetch(`${bakeryAPI.baseURL}/orders/${orderId}`, {
-    method: "DELETE"
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      statusId: 4
+    })
   })
   .then(OrderList)
 }
