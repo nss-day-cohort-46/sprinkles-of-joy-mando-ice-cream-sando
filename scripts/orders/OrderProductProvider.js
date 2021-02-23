@@ -28,27 +28,9 @@ export const saveOrderProducts = (orderProductsArray) => {
   return Promise.all(orderProductsPromiseArray)
 }
 
-const deleteOrderProduct = orderProductId => {
-  return fetch(`${bakeryAPI.baseURL}/orderproducts/${orderProductId}`, {
-    method: "DELETE"
-  })
-}
-
-// listens for delete order event. Deletes all orderProducts data, then the order data.
+// listens for archive order event. Deletes all orderProducts data, then the order data.
 eventHub.addEventListener("deleteOrder", deleteEvt => {
-  getOrderProducts()
-    .then()
-    .then(() => {
-      const orderId = deleteEvt.detail
-      const orderProducts = useOrderProducts()
-      const filteredOrdProd = orderProducts.filter(item => item.orderId === orderId)
 
-      for (const item of filteredOrdProd) {
-        deleteOrderProduct(item.id)
-      }
-    })
-    .then(() => {
       const orderId = deleteEvt.detail
       deleteOrder(orderId)
-    })
 })

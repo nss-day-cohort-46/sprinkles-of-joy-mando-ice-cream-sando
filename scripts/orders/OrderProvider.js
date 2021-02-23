@@ -6,7 +6,14 @@ const eventHub = document.querySelector("#container")
 
 let orders = []
 
-export const useOrders = () => orders.slice()
+export const useOrders = () => {
+  const ordersCopy = orders.slice()
+  const sortedByDate = ordersCopy.sort(
+    (nextOrder, currentOrder) => 
+    currentOrder.timestamp - nextOrder.timestamp
+  )
+  return sortedByDate
+}
 
 export const getOrders = () => {
   return fetch(`${bakeryAPI.baseURL}/orders?_expand=status`)
@@ -44,9 +51,16 @@ const dispatchStateChangeEvent = () => {
   eventHub.dispatchEvent(ordersStateChangedEvent)
 }
 
+// updated to change orderstatus to archived
 export const deleteOrder = orderId => {
   return fetch(`${bakeryAPI.baseURL}/orders/${orderId}`, {
-    method: "DELETE"
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      statusId: 4
+    })
   })
   .then(OrderList)
 }
