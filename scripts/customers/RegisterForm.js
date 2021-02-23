@@ -73,8 +73,10 @@ eventHub.addEventListener("click", e => {
 
     saveCustomer(customerObject).then(response => response.json()).then((user)=>{
       authHelper.storeUserInSessionStorage(user.id)
+    }).then(()=>{
       const customEvent = new CustomEvent("userLoggedIn")
       eventHub.dispatchEvent(customEvent)
     })
+    
   }
 })
