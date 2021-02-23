@@ -23,7 +23,7 @@ export const OrderList = () => {
         products = useProducts()      // all products
         statuses = useStatuses()
 
-        customerOrders = useOrders().filter(order => order.customerId === currentCustomerId)      // orders that match the customer id
+        customerOrders = useOrders().filter(order => order.customerId === currentCustomerId && order.statusId !== 4)      // orders that match the customer id
         let customerOrderProducts = customerOrders.map(co => orderProducts.filter(op => op.orderId === co.id)) // array of arrays of orderProducts for each order... for each order in customer orders find the orderProducts that match the orderId
         let arrayOfProductArrays = [] // empty array that will end up being our final array of array of products
         for (const orderProductArray of customerOrderProducts) {
