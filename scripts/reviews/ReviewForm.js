@@ -1,4 +1,4 @@
-import {saveReview} from "./ReviewProvider.js"
+import {getReviewById, saveReview, editReview} from "./ReviewProvider.js"
 import {authHelper} from "../auth/authHelper.js"
 
 const eventHub = document.querySelector('#container')
@@ -8,14 +8,14 @@ eventHub.addEventListener("saveReview", evt => {
     const currentCustomerId = parseInt(authHelper.getCurrentUserId())
     if(currentCustomerId){
         productId = evt.detail.productId
-        contentTarget.innerHTML = reviewForm()
+        contentTarget.innerHTML = saveReviewForm()
     }else{
         alert("please login to leave a review")
     }
 })
 
 
-const reviewForm = () => {
+const saveReviewForm = () => {
     return `
     <div id="contact__modal" class="modal--parent">
     <div class="modal--content">
@@ -47,6 +47,75 @@ const reviewForm = () => {
 `
 }
 
+eventHub.addEventListener("editReview", evt => {
+    debugger
+    contentTarget.innerHTML = editReviewForm(evt.detail.reviewId)
+})
+const editReviewForm = (reviewId) => {
+    const currentReview = getReviewById(reviewId)
+    return `
+    <div id="contact__modal" class="modal--parent">
+    <div class="modal--content">
+        <h3>Contact Form</h3>
+        <form action="" id="reviewForm">
+            <fieldset>
+                <label for="reviewTitle">title</label>
+                <textarea type="text" id="reviewTitle" name="reviewTitle">${currentReview.title}</textarea>
+            </fieldset>
+            <fieldset>
+                <label for="reviewText">review</label>
+                <textarea type="text" id="reviewText" name="reviewText">${currentReview.text}</textarea>
+            </fieldset>
+            <input type="radio" id="1" name="rating" value="1">
+            <label for="rating1">1</label>
+            <input type="radio" id="2" name="rating" value="2">
+            <label for="rating2">2</label>
+            <input type="radio" id="3" name="rating" value="3">
+            <label for="rating3">3</label>
+            <input type="radio" id="4" name="rating" value="4">
+            <label for="rating4">4</label>
+            <input type="radio" id="5" name="rating" value="5">
+            <label for="rating5">5</label>
+            <button id="editSubmit--${currentReview.productId}--${currentReview.id}">Submit</button>
+        </form>
+        <button id="formModal--close">Close</button>
+    </div>
+</div>
+`
+}
+eventHub.addEventListener("click", evt => {
+    if (evt.target.id.startsWith("editSubmit")) {
+        evt.preventDefault()
+            const [prefix, pId, id] = evt.target.id.split("--")
+            const title = document.querySelector('#reviewTitle').value
+            const text = document.querySelector('#reviewText').value
+            const ratings = document.getElementsByName('rating')
+            const currentCustomerId = parseInt(authHelper.getCurrentUserId())
+            let ratingValue
+            for (const rating of ratings) {
+                if(rating.checked){
+                    ratingValue = rating.value
+                }    
+            }
+            const newReview = {
+                id : id,
+                title: title,
+                text : text,
+                rating : parseInt(ratingValue),
+                customerId : currentCustomerId,
+                productId : pId
+            }
+            if (title === "" || text === "" || ratingValue === "") {
+                alert("Please complete all fields before submitting your message.")
+            } else {
+                editReview(newReview)
+                const thisForm = document.querySelector('#reviewForm')
+                thisForm.reset()
+                contentTarget.innerHTML = ""
+                alert("Sucess! Thanks For updating your review")
+            }
+    }
+})
 eventHub.addEventListener("click", evt => {
     if (evt.target.id === "reviewSubmit") {
         evt.preventDefault()

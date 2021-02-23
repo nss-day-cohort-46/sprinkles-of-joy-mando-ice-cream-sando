@@ -35,6 +35,16 @@ export const deleteReview = reviewId => {
     method: "DELETE"
   })
 }
+export const editReview = review =>{
+  debugger
+  return fetch(`${bakeryAPI.baseURL}/reviews/${review.id}`), {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json"
+      },
+    body: JSON.stringify(review)
+  }
+}
 // TO DO
 // 1. get and use reviews
 // 2. when populating products, pass an argument of a review object
