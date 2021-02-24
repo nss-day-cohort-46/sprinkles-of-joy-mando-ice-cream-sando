@@ -43,9 +43,10 @@ eventHub.addEventListener("click", evt => {
 
 const reviewModal = (reviewId,name) => {
     const currentReview = getReviewById(reviewId)
-    let deleteButton = ""
+    let buttons = ""
     if(currentReview.customerId === parseInt(authHelper.getCurrentUserId())){
-        deleteButton = `<button id="deleteReview--${reviewId}">Delete</button>`
+        buttons = `<button id="deleteReview--${reviewId}">Delete</button>
+        <button id="editReview--${reviewId}">Edit</button> `
     }
     return `
     <div id="review__modal" class="modal--parent">
@@ -54,7 +55,7 @@ const reviewModal = (reviewId,name) => {
         <p>Text : ${currentReview.text}</p>
         <p>Author : ${name}</p>
         <button id="formModal--close">Close</button>
-        ${deleteButton}
+        ${buttons}
     </div>
 </div>
     `
@@ -89,5 +90,17 @@ eventHub.addEventListener("click", evt => {
         const [prefix, reviewId] = evt.target.id.split("--")
         deleteReview(reviewId).then(document.querySelector('.contactFormContainer').innerHTML = "")
         .then(ProductList())
+    }  
+})
+eventHub.addEventListener("click", evt => {
+    
+    if (evt.target.id.startsWith("editReview--")) {
+        const [prefix, reviewId] = evt.target.id.split("--")
+        const editReviewEvent = new CustomEvent("editReview", {
+            detail: {
+                reviewId: parseInt(reviewId)
+            }
+        })
+        eventHub.dispatchEvent(editReviewEvent)
     }  
 })
